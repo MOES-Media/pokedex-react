@@ -4,10 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "clean": "rimraf build",
+    "clean": "rimraf build && rimraf ../assets && rimraf ../index.html",
     "docs:html": "docker-compose up asciidoctor-html",
     "docs:pdf": "docker-compose up asciidoctor-pdf",
-    "docs:gh-pages": "yarn docs:html && mv build/pokedex.html ../index.html"
+    "docs:gh-pages": "yarn clean && yarn docs:html && mv build/pokedex.html ../index.html && cp -R assets/ ../assets"
   },
   "author": "",
   "license": "ISC",
