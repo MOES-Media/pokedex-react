@@ -4,7 +4,7 @@ Jeroen Nouws <pokedex@moes-media.be>
 :doctype: book
 :toc:
 :toc-title: Table of Contents of {doctitle}
-:toclevels: 2
+:toclevels: 1
 :description: Accompanying tutorial for the Pokedex React Bootcamp
 :numbered:
 :idprefixed:
