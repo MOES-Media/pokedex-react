@@ -4,10 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "clean": "rimraf build && rimraf ../assets && rimraf ../index.html",
+    "clean": "rimraf build && rimraf ../assets && rimraf ../index.html && rimraf ../pokedex.pdf",
     "docs:html": "docker-compose up asciidoctor-html",
     "docs:pdf": "docker-compose up asciidoctor-pdf",
-    "docs:gh-pages": "yarn clean && yarn docs:html && mv build/pokedex.html ../index.html && cp -R assets/ ../assets"
+    "move:html": "mv build/pokedex.html ../index.html && cp -R assets/ ../assets",
+    "move:pdf": "mv build/pokedex.pdf ../pokedex.pdf",
+    "docs:gh-pages": "yarn clean && yarn docs:html && yarn move:html && yarn docs:pdf && yarn move:pdf"
   },
   "author": "",
   "license": "ISC",

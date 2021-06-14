@@ -9,6 +9,8 @@ Jeroen Nouws <pokedex@moes-media.be>
 :numbered:
 :idprefixed:
 
+Click here if you rather have a link:pokedex.pdf[PDF]
+
 = I. Introduction 
 include::chapters/typescript-primer.adoc[]
 
