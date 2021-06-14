@@ -1,0 +1,17 @@
+== First Component: PokeListItem
+
+=== Component: PokeListItem
+
+==== Styling with css
+
+==== Styling with Styled Components
+
+=== Visual testing & documentation with Storybook
+
+==== Setting up storybook
+
+=== Quality through testing
+
+==== Testing components with Jest
+
+==== Snapshot testing with Jest

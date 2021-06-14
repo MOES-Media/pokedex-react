@@ -1,0 +1,21 @@
+== Project Setup
+
+=== What are we building?
+
+In this tutorial we'll be building a pokedex react app. We'll do so by implementing the commonly used component/container pattern (representational/logical components). + 
+We'll also touch visual testing and documentation by writing stories for Storybook and use Jest for component testing and snapshot testing. +
+Finally we'll introduce redux into our project for managing state and thunk middleware to handle asyncronous api calls. +
+This setup might seem overkill for a project of this size and there are better solutions to handle state than through redux for such a small project, but the purpose of this tutorial is to teach you some commonly used technologies and patterns within the React ecosystem.
+
+==== Wireframe
+
+Our Application has a very basic layout consisting of 2 columns, in the left hand column we'll display a list of selectable pokemons, while in the right side column we'll display either the details of the selected pokémon or a placeholder text.
+
+image::assets/img/wireframe.png[caption="Figure - Wireframe"]
+
+==== Datasource
+
+All our Pokémon information will be pulled from the link:https://pokeapi.co/[Poke API]. This is a standard REST-Api, altough at the time of writing they are going into beta with their GraphQL api. +
+This API holds an extensive source of information about all different Pokémons, going from names, to types, to abilities and more. If you like this tutorial go give those guys your support.
+
+=== Creating a new project with Create-React-App

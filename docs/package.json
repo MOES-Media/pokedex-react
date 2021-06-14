@@ -1,0 +1,17 @@
+{
+  "name": "pokedex-docs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "clean": "rimraf build",
+    "docs:html": "docker-compose up asciidoctor-html",
+    "docs:pdf": "docker-compose up asciidoctor-pdf",
+    "docs:gh-pages": "yarn docs:html && mv build/pokedex.html ../index.html"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "rimraf": "^3.0.2"
+  }
+}

@@ -1,0 +1,21 @@
+Pokedex React Tutorial
+======================
+Jeroen Nouws <pokedex@moes-media.be>
+:doctype: book
+:toc:
+:toc-title: Table of Contents of {doctitle}
+:toclevels: 2
+:description: Accompanying tutorial for the Pokedex React Bootcamp
+:numbered:
+:idprefixed:
+
+= I. Introduction 
+include::chapters/typescript-primer.adoc[]
+
+include::chapters/project-setup.adoc[]
+
+= II. Components & Containers
+include::chapters/first-component.adoc[]
+
+= III. State management & Middleware
+== redux stuff

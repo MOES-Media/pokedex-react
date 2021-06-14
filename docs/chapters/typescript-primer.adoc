@@ -1,0 +1,14 @@
+== Typescript Primer
+
+=== What is Typescript? A quick overview
+
+* superset of javascript
+* adding typescript to your project
+** installing typescript
+** adding tsconfig
+** adding package.json script
+* typing
+** types
+** interfaces
+* classes 
+* enums
