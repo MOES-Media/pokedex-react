@@ -11,6 +11,20 @@ Jeroen Nouws <pokedex@moes-media.be>
 
 Click here if you rather have a link:pokedex.pdf[PDF]
 
+[preface]
+== Preface
+=== Asumptions
+The reader of this tutorial should have a basic understanding of web based technologies such as html, css and javascript.
+
+=== Versions used
+* node: 14 (LTS)
+* yarn: 1.22.5
+* react: 17
+
+=== Code Examples
+Reading a tutorial can give you insights into a tech stack, but writing code and testing it gives you a good feeling of learning to work with React. 
+All code is available on link:https://github.com/MOES-Media/pokedex-react[Github].
+
 = I. Introduction 
 include::chapters/typescript-primer.adoc[]
 
