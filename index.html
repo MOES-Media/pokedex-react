@@ -452,6 +452,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_asumptions">Asumptions</a></li>
 <li><a href="#_versions_used">Versions used</a></li>
 <li><a href="#_code_examples">Code Examples</a></li>
+<li><a href="#_commands_and_cli">Commands and CLI</a></li>
 </ul>
 </li>
 <li><a href="#_i_introduction">I. Introduction</a>
@@ -464,7 +465,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_project_setup">2. Project Setup</a>
 <ul class="sectlevel2">
 <li><a href="#_what_are_we_building">2.1. What are we building?</a></li>
-<li><a href="#_creating_a_new_project_with_create_react_app">2.2. Creating a new project with Create-React-App</a></li>
+<li><a href="#_creating_a_new_react_project">2.2. Creating a new React Project</a></li>
 </ul>
 </li>
 </ul>
@@ -526,6 +527,12 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="paragraph">
 <p>Reading a tutorial can give you insights into a tech stack, but writing code and testing it gives you a good feeling of learning to work with React.
 All code is available on <a href="https://github.com/MOES-Media/pokedex-react">Github</a>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_commands_and_cli">Commands and CLI</h3>
+<div class="paragraph">
+<p>All commands in this tutorial are run in a bash shell on linux and not tested in windows based terminals like command prompt or Powershell.</p>
 </div>
 </div>
 </div>
@@ -612,8 +619,110 @@ This API holds an extensive source of information about all different Pokémons,
 </div>
 </div>
 <div class="sect2">
-<h3 id="_creating_a_new_project_with_create_react_app">2.2. Creating a new project with Create-React-App</h3>
+<h3 id="_creating_a_new_react_project">2.2. Creating a new React Project</h3>
+<div class="paragraph">
+<p>Before we start creating a new React project we should have a little talk about what React is and isn&#8217;t.<br>
+React is an open source javascript <strong>library</strong> that&#8217;s used for building user interfaces and single page applications. Altough there are other popular frameworks around, React stands out compared to other frameworks like Angular and Vue.js by being:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Declerative</strong> instead of imperative</p>
+</li>
+<li>
+<p><strong>Not opinionated</strong>, except on how to render views, React doesn&#8217;t care how you structure or build your project.</p>
+</li>
+<li>
+<p><strong>Lightweight</strong></p>
+</li>
+<li>
+<p><strong>Library not a framework</strong>, React focusses on creating components and building pages, solutions like state management and routing aren&#8217;t part of React.js, but are managed by the community.</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+Since React isn&#8217;t opinionated you&#8217;ll often find different solutions for the same problem i.e.: Flux vs Redux for state management, css vs styled components for styling,&#8230;&#8203;
+</td>
+</tr>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_using_create_react_app_to_scaffold_a_new_react_project">2.2.1. Using create-react-app to scaffold a new React project</h4>
+<div class="paragraph">
+<p>Creating a new react app is as easy as running one command, so let&#8217;s get started. Open up your terminal and run <code>yarn create react-app pokedex --template typescript</code>, this will create a new directory pokedex and populates it with a default react project structure and files.
+If all went well you should see output similar to this</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Success! Created pokedex at
+Inside that directory, you can run several commands:
 
+  yarn start
+    Starts the development server.
+
+  yarn build
+    Bundles the app into static files for production.
+
+  yarn test
+    Starts the test runner.
+
+  yarn eject
+    Removes this tool and copies build dependencies, configuration files
+    and scripts into the app directory. If you do this, you can’t go back!
+
+We suggest that you begin by typing:
+
+  cd pokedex
+  yarn start
+
+Happy hacking!
+Done in 45.15s.</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Inside your pokedex folder you should have a file structure that looks like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>pokedex
+|_ public
+  |_ ...
+|_ src
+  |_ ...
+|_ package.json
+|_ tsconfig.json
+|_ README.md</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s quickly discuss the structure and some of the files in our pokedex folder:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>public/</strong> this folder contains our static files like index.html, favicon, etc.</p>
+</li>
+<li>
+<p><strong>src/</strong> this folder contains all your source that makes up your application.</p>
+</li>
+<li>
+<p><strong>package.json</strong> this file contains the details of your project including but not limited to dependencies, tslint config, build scripts,&#8230;&#8203;</p>
+</li>
+<li>
+<p><strong>tsconfig.json</strong> in order to compile typescript we need a tsconfig file telling how to compile the project.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>So now that we have our project setup under our belts, let&#8217;s get started by creating our first component.</p>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -662,7 +771,7 @@ This API holds an extensive source of information about all different Pokémons,
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2021-06-15 00:11:03 UTC
+Last updated 2021-06-15 09:23:54 UTC
 </div>
 </div>
 </body>

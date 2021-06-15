@@ -18,4 +18,63 @@ image::assets/img/wireframe.png[caption="Figure - Wireframe"]
 All our Pokémon information will be pulled from the link:https://pokeapi.co/[Poke API]. This is a standard REST-Api, altough at the time of writing they are going into beta with their GraphQL api. +
 This API holds an extensive source of information about all different Pokémons, going from names, to types, to abilities and more. If you like this tutorial go give those guys your support.
 
-=== Creating a new project with Create-React-App
+=== Creating a new React Project
+Before we start creating a new React project we should have a little talk about what React is and isn't. +
+React is an open source javascript *library* that's used for building user interfaces and single page applications. Altough there are other popular frameworks around, React stands out compared to other frameworks like Angular and Vue.js by being:
+
+* *Declerative* instead of imperative
+* *Not opinionated*, except on how to render views, React doesn't care how you structure or build your project.
+* *Lightweight*
+* *Library not a framework*, React focusses on creating components and building pages, solutions like state management and routing aren't part of React.js, but are managed by the community.
+
+NOTE: Since React isn't opinionated you'll often find different solutions for the same problem i.e.: Flux vs Redux for state management, css vs styled components for styling,...
+
+==== Using create-react-app to scaffold a new React project
+
+Creating a new react app is as easy as running one command, so let's get started. Open up your terminal and run `yarn create react-app pokedex --template typescript`, this will create a new directory pokedex and populates it with a default react project structure and files.
+If all went well you should see output similar to this
+----
+Success! Created pokedex at 
+Inside that directory, you can run several commands:
+
+  yarn start
+    Starts the development server.
+
+  yarn build
+    Bundles the app into static files for production.
+
+  yarn test
+    Starts the test runner.
+
+  yarn eject
+    Removes this tool and copies build dependencies, configuration files
+    and scripts into the app directory. If you do this, you can’t go back!
+
+We suggest that you begin by typing:
+
+  cd pokedex
+  yarn start
+
+Happy hacking!
+Done in 45.15s.
+
+----
+Inside your pokedex folder you should have a file structure that looks like this:
+----
+pokedex
+|_ public
+  |_ ...
+|_ src
+  |_ ...
+|_ package.json
+|_ tsconfig.json
+|_ README.md
+----
+Let's quickly discuss the structure and some of the files in our pokedex folder:
+
+* *public/* this folder contains our static files like index.html, favicon, etc.
+* *src/* this folder contains all your source that makes up your application.
+* *package.json* this file contains the details of your project including but not limited to dependencies, tslint config, build scripts,...
+* *tsconfig.json* in order to compile typescript we need a tsconfig file telling how to compile the project.
+
+So now that we have our project setup under our belts, let's get started by creating our first component.

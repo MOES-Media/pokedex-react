@@ -25,6 +25,9 @@ The reader of this tutorial should have a basic understanding of web based techn
 Reading a tutorial can give you insights into a tech stack, but writing code and testing it gives you a good feeling of learning to work with React. 
 All code is available on link:https://github.com/MOES-Media/pokedex-react[Github].
 
+=== Commands and CLI
+All commands in this tutorial are run in a bash shell on linux and not tested in windows based terminals like command prompt or Powershell.
+
 = I. Introduction 
 include::chapters/typescript-primer.adoc[]
 
