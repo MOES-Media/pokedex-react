@@ -34,5 +34,10 @@ include::snippets/ch4/03.pokelist-with-pokemonprops.adoc[]
 === Quality, Quality, Quality
 
 As stated in the previous chapter, quality is often an overlooked aspect of software development. However, if you, by accident, break a piece of code you've written 3 months ago that didn't had automated testing on it. It's a real PITA to fix. +
-So do yourself a favor and create a habit of writing tests/documentation right after you've written your component (or even better before).
+So do yourself a favor and create a habit of writing tests/documentation right after you've written your component (or even better before, if you're following TDD principles).
 
+NOTE: TDD uitleggen XD
+
+==== Documentation with Storybook
+
+==== Snapshot testing with Jest
