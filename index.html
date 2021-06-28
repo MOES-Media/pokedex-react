@@ -660,7 +660,7 @@ pre.rouge {
 <span id="email" class="email"><a href="mailto:pokedex@moes-media.be">pokedex@moes-media.be</a></span><br>
 </div>
 <div id="toc" class="toc">
-<div id="toctitle">Table of Contents of Pokedex React Tutorial</div>
+<div id="toctitle">Pokedex React Tutorial - T.O.C.</div>
 <ul class="sectlevel1">
 <li><a href="#_preface">Preface</a>
 <ul class="sectlevel2">
@@ -694,11 +694,31 @@ pre.rouge {
 <li><a href="#_quality_through_testing">3.3. Quality through testing</a></li>
 </ul>
 </li>
+<li><a href="#_composed_components_building_components_out_of_components">4. Composed Components: building components out of components</a>
+<ul class="sectlevel2">
+<li><a href="#_children">4.1. Children</a></li>
+<li><a href="#_component_pokelist">4.2. Component: PokeList</a></li>
+<li><a href="#_quality_quality_quality">4.3. Quality, Quality, Quality</a></li>
+</ul>
+</li>
+<li><a href="#_stateless_vs_stateful_components">5. Stateless vs Stateful Components</a></li>
 </ul>
 </li>
 <li><a href="#_iii_state_management_middleware">III. State management &amp; Middleware</a>
 <ul class="sectlevel1">
-<li><a href="#_redux_stuff">4. redux stuff</a></li>
+<li><a href="#_redux_stuff">6. redux stuff</a></li>
+<li><a href="#_middleware">7. Middleware</a>
+<ul class="sectlevel2">
+<li><a href="#_redux_thunk">7.1. Redux Thunk</a></li>
+<li><a href="#_react_router">7.2. React router</a></li>
+</ul>
+</li>
+<li><a href="#_whats_next">8. What&#8217;s next?</a>
+<ul class="sectlevel2">
+<li><a href="#_securing_your_application">8.1. Securing your application</a></li>
+<li><a href="#_serverless">8.2. Serverless</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -1019,11 +1039,38 @@ We&#8217;ll start by creating this component with basic html styling, afterwards
 <p>Create a new folder <code>src/component/PokoListItem</code></p>
 </li>
 <li>
+<p>Create a new file inside this folder <code>pokelistitem.css</code> with following content in it.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><sub>src/components/PokeListItem/pokelistitem.css</sub></p>
+</div>
+<div id="src/components/PokeListItem/pokelistitem" class="listingblock css">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="css"><span class="nc">.pokelistitem</span> <span class="p">{</span>
+  <span class="nl">width</span><span class="p">:</span> <span class="m">120px</span><span class="p">;</span>
+  <span class="nl">height</span><span class="p">:</span> <span class="m">120px</span><span class="p">;</span>
+  <span class="nl">border</span><span class="p">:</span> <span class="nb">none</span><span class="p">;</span>
+  <span class="nl">border-radius</span><span class="p">:</span> <span class="m">5px</span><span class="p">;</span>
+  <span class="nl">box-shadow</span><span class="p">:</span> <span class="m">0</span> <span class="m">2px</span> <span class="m">2px</span> <span class="m">0</span> <span class="n">rgba</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">0.16</span><span class="p">);</span>
+  <span class="nl">margin</span><span class="p">:</span> <span class="m">10px</span><span class="p">;</span>
+  <span class="nl">background-position</span><span class="p">:</span> <span class="nb">center</span><span class="p">;</span>
+  <span class="nl">background-repeat</span><span class="p">:</span> <span class="nb">no-repeat</span><span class="p">;</span>
+<span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
 <p>Create a new file inside this folder <code>index.tsx</code> with following content</p>
 </li>
 </ul>
 </div>
-<div id="index" class="listingblock tsx">
+<div class="paragraph">
+<p><sub>src/components/PokeListItem/index.tsx</sub></p>
+</div>
+<div id="src/components/PokeListItem/index" class="listingblock tsx">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="tsx"><span class="k">import</span> <span class="nx">React</span><span class="p">,</span> <span class="p">{</span> <span class="nx">Component</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">react</span><span class="dl">'</span><span class="p">;</span> <b class="conum">(1)</b>
 <span class="k">import</span> <span class="dl">'</span><span class="s1">pokelistitem.css</span><span class="dl">'</span><span class="p">;</span> <b class="conum">(2)</b>
@@ -1039,62 +1086,47 @@ We&#8217;ll start by creating this component with basic html styling, afterwards
         <span class="k">return</span> <span class="p">(</span>
             <span class="p">&lt;</span><span class="nt">button</span>
                 <span class="na">role</span><span class="p">=</span><span class="s">"button"</span>
-                <span class="na">class</span><span class="p">=</span><span class="s">"pokelistitem"</span>
+                <span class="na">className</span><span class="p">=</span><span class="s">"pokelistitem"</span>
                 <span class="na">style</span><span class="p">=</span><span class="si">{</span><span class="p">{</span>
-                    <span class="na">backgroundImage</span><span class="p">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">sprite</span>
+                    <span class="na">backgroundImage</span><span class="p">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">sprite</span> <b class="conum">(7)</b>
                 <span class="p">}</span><span class="si">}</span>
             <span class="p">&gt;</span>);
     }
 }
 
-export default PokeListItemComponent; <b class="conum">(7)</b></code></pre>
+export default PokeListItemComponent; <b class="conum">(8)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
 <ol>
 <li>
-<p>foobar</p>
+<p>Every tsx/jsx file starts with importing the default export of react, this is neccesary for the transpilation process. During this process JSX is wrapped inside <code>React.createElement</code> and without this import we would get errors. We also import the Component class for later use.</p>
 </li>
 <li>
-<p>foobar</p>
+<p>import your css file.</p>
 </li>
 <li>
-<p>foobar</p>
+<p>Define the properties your component will receive</p>
 </li>
 <li>
-<p>foobar</p>
+<p>onClick is a Function that receives an optional parameter event of type MouseEvent and has return type void.</p>
 </li>
 <li>
-<p>foobar</p>
+<p>In React there are multiple ways of creating a component, here we create a class that extends the Component class of react. In order to make our component aware of the shape of it&#8217;s properties and state (more on that in chapter 5) we have to add the correct types. In this case our properties will have the shape of PokeListItemProps, but since we don&#8217;t use state we pass an empty object.</p>
 </li>
 <li>
-<p>foobar</p>
+<p>Every react component has a render function, this function returns, in a descriptive way, how our component will render in the dom. This syntax is called JSX and is a combination of javascript and XML. Being an extension of XML it follows basic XML rules of closing elements and having only one top element.</p>
 </li>
 <li>
-<p>foobar</p>
-<div class="ulist">
-<ul>
-<li>
-<p>Create a new file inside this folder <code>pokelistitem.css</code> with following content in it.</p>
+<p>Every react class has access to it&#8217;s properties through <code>this.props</code>, the shape of this properties object is the same as the type we used to type our Component.</p>
 </li>
-</ul>
-</div>
+<li>
+<p>Exporting our PokeListItem as a module with a default export.</p>
 </li>
 </ol>
 </div>
-<div id="pokelistitem" class="listingblock css">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="css"><span class="nc">.pokelistitem</span> <span class="p">{</span>
-  <span class="nl">width</span><span class="p">:</span> <span class="m">120px</span><span class="p">;</span>
-  <span class="nl">height</span><span class="p">:</span> <span class="m">120px</span><span class="p">;</span>
-  <span class="nl">border</span><span class="p">:</span> <span class="nb">none</span><span class="p">;</span>
-  <span class="nl">border-radius</span><span class="p">:</span> <span class="m">5px</span><span class="p">;</span>
-  <span class="nl">box-shadow</span><span class="p">:</span> <span class="m">0</span> <span class="m">2px</span> <span class="m">2px</span> <span class="m">0</span> <span class="n">rgba</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">0.16</span><span class="p">);</span>
-  <span class="nl">margin</span><span class="p">:</span> <span class="m">10px</span><span class="p">;</span>
-  <span class="nl">background-position</span><span class="p">:</span> <span class="nb">center</span><span class="p">;</span>
-  <span class="nl">background-repeat</span><span class="p">:</span> <span class="nb">no-repeat</span><span class="p">;</span>
-<span class="p">}</span></code></pre>
-</div>
+<div class="paragraph">
+<p>And there you have it, our first React component. In the next part we&#8217;ll refactor this piece of code to use Styled Components instead of css for styling.</p>
 </div>
 </div>
 <div class="sect3">
@@ -1106,6 +1138,10 @@ export default PokeListItemComponent; <b class="conum">(7)</b></code></pre>
 <h3 id="_visual_testing_documentation_with_storybook">3.2. Visual testing &amp; documentation with Storybook</h3>
 <div class="sect3">
 <h4 id="_setting_up_storybook">3.2.1. Setting up storybook</h4>
+
+</div>
+<div class="sect3">
+<h4 id="_writing_our_first_story">3.2.2. Writing our first story</h4>
 
 </div>
 </div>
@@ -1122,17 +1158,361 @@ export default PokeListItemComponent; <b class="conum">(7)</b></code></pre>
 </div>
 </div>
 </div>
-<h1 id="_iii_state_management_middleware" class="sect0">III. State management &amp; Middleware</h1>
 <div class="sect1">
-<h2 id="_redux_stuff">4. redux stuff</h2>
+<h2 id="_composed_components_building_components_out_of_components">4. Composed Components: building components out of components</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In the previous chapter we saw how we can build a simple standalone component, although pretty basic this example already showed how versatile a tool like React can be.<br>
+Thanks to tooling like Storybook we have a visual tool to show and document our components with and with Jest we made sure our components are tested.</p>
+</div>
+<div class="sect2">
+<h3 id="_children">4.1. Children</h3>
+<div class="paragraph">
+<p>As you saw in the previous chapter, React components can be composed from different DOM elements. However if we always had to create react components out of DOM elements the reusability would soon be non-existent. So how exactly can we create composed components without having to repeat ourselves?<br>
+<em>Children!</em> Children are a special kind of prop in React that represent content that can be included in your component. This property accepts everything that is a valid React Element, every React component, DOM-element and String is a valid child of a react component.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+Writing reusable code is one of the most important principles in software development. It is aimed at reducing the repetition of software patterns through means of abstraction. This principle is commonly known as the DRY principle (Don&#8217;t Repeat Yourself)
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Take a look at the examples below and see for yourself:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="tsx"><span class="kd">const</span> <span class="nx">ChildComponent</span><span class="p">:</span> <span class="nx">FC</span><span class="o">&lt;</span><span class="kr">any</span><span class="o">&gt;</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">(&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>I am a child component.<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;);</span>
+
+<span class="kd">const</span> <span class="nx">ComponentWithChildren</span><span class="p">:</span> <span class="nx">FC</span><span class="o">&lt;</span><span class="nx">PropsWithChildren</span><span class="o">&lt;</span><span class="kr">any</span><span class="o">&gt;&gt;</span> <span class="o">=</span> <span class="p">({</span><span class="nx">children</span><span class="p">})</span> <span class="o">=&gt;</span> <span class="p">(</span> <b class="conum">(1)</b>
+    <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+        <span class="si">{</span><span class="nx">children</span><span class="si">}</span> <b class="conum">(2)</b>
+    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">DomElementChildren</span><span class="p">:</span> <span class="nx">FC</span><span class="o">&lt;</span><span class="kr">any</span><span class="o">&gt;</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">(</span>
+    <span class="p">&lt;</span><span class="nc">ComponentWithChildren</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>FooBar paragraph<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span> <b class="conum">(3)</b>
+    <span class="p">&lt;/</span><span class="nc">ComponentWithChildren</span><span class="p">&gt;</span>
+<span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">StringChildren</span><span class="p">:</span> <span class="nx">FC</span><span class="o">&lt;</span><span class="kr">any</span><span class="o">&gt;</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">(</span>
+    <span class="p">&lt;</span><span class="nc">ComponentWithChildren</span><span class="p">&gt;</span>
+        Hello World! <b class="conum">(4)</b>
+    <span class="p">&lt;/</span><span class="nc">ComponentWithChildren</span><span class="p">&gt;</span>
+<span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">ReactComponentChildren</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">(</span>
+    <span class="p">&lt;</span><span class="nc">ComponentWithChildren</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nc">ChildComponent</span> <span class="p">/&gt;</span>
+        <span class="p">&lt;</span><span class="nc">ChildComponent</span> <span class="p">/&gt;</span> <b class="conum">(5)</b>
+    <span class="p">&lt;/</span><span class="nc">ComponentWithChildren</span><span class="p">&gt;</span>
+<span class="p">);</span></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>Before we can start using our children we first need to make typescript aware we are using PropsWithChildren as a type, this is a convenience type that&#8217;s located in the React package. This type also takes a generic, in this case any, to represent the props other than children. We use object deconstruction to extract the children out our properties.</p>
+</li>
+<li>
+<p>In order for React to know where to render the children we need to declare the correct position of the children.</p>
+</li>
+<li>
+<p>This is an example of how to pass DOM elements as children to a React component.</p>
+</li>
+<li>
+<p>This is an example of how to pass a String to a react component as a child.</p>
+</li>
+<li>
+<p>This is an example of how to pass another React component as a child to the parent React component, as shown here, you are not restricted to just passing 1 child, you can add multiple children, as well as a combination of all 3 different React Elements.</p>
+</li>
+</ol>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+Using children to compose more complex structures is called <em>composition</em>.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_component_pokelist">4.2. Component: PokeList</h3>
+<div class="imageblock right">
+<div class="content">
+<img src="assets/img/pokelist.png" alt="pokelist">
+</div>
+</div>
+<div class="paragraph">
+<p>As an example of a composed component we&#8217;ll be building the PokeList, this is a simple component that provides a surrounding div with a background image. This div will hold our PokeListItems we created in the previous chapter.<br>
+We&#8217;ll build this component in 2 different ways, just like in the previous chapter. Why? Because just as with styling React isn&#8217;t opinionated on how you build your components. So in our first example we&#8217;ll build a PokeList component that accepts children and we&#8217;ll pass our PokeListItems as children. In the second example we&#8217;ll pass an array of pokemons which will be used to generate the children.<br></p>
+</div>
+<div class="paragraph">
+<p>Before we begin, create a new folder under <code>src/components</code> called <em>PokeList</em> with a file index.tsx inside.</p>
+</div>
+<div class="sect3">
+<h4 id="_pokelist_creating_a_component_that_accepts_children">4.2.1. PokeList: creating a component that accepts children</h4>
+<div class="paragraph">
+<p>We&#8217;ll start by creating the first example, where we&#8217;ll pass the PokeListItems from the previous chapter as children.<br>
+First we&#8217;ll need the PokeList Component, as stated in the previous chapter you&#8217;re free to choose how you do your styling (css/SASS/styled-components/&#8230;&#8203;), but for the sake of consistency we&#8217;ll use styled-components here and every other example throughout this tutorial.</p>
+</div>
+<div class="paragraph">
+<p><sub>src/components/PokeList/index.tsx</sub><br></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="tsx"><span class="k">import</span> <span class="nx">React</span><span class="p">,</span> <span class="p">{</span> <span class="nx">FC</span><span class="p">,</span> <span class="nx">PropsWithChildren</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">react</span><span class="dl">"</span><span class="p">;</span>
+<span class="k">import</span> <span class="nx">styled</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">styled-components</span><span class="dl">"</span><span class="p">;</span>
+
+<span class="kd">const</span> <span class="nx">StyledPokeList</span> <span class="o">=</span> <span class="nx">styled</span><span class="p">.</span><span class="nx">div</span><span class="s2">`
+  background-color: #bff9ff;
+  box-shadow: inset 0 0 1.25rem rgba(0, 0, 0, 0.5);
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+`</span><span class="p">;</span>
+
+<span class="kd">const</span> <span class="nx">PokeList</span><span class="p">:</span> <span class="nx">FC</span><span class="o">&lt;</span><span class="nx">PropsWithChildren</span><span class="o">&lt;</span><span class="kr">any</span><span class="o">&gt;&gt;</span> <span class="o">=</span> <span class="p">({</span><span class="nx">children</span><span class="p">})</span> <span class="o">=&gt;</span> <span class="p">(</span>
+    <span class="p">&lt;</span><span class="nc">StyledPokeList</span><span class="p">&gt;</span>
+        <span class="si">{</span><span class="nx">children</span><span class="si">}</span>
+    <span class="p">&lt;/</span><span class="nc">StyledPokeList</span><span class="p">&gt;</span>
+<span class="p">);</span>
+
+<span class="k">export</span> <span class="k">default</span> <span class="nx">PokeList</span><span class="p">;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We then can use this component in the following fashion:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="tsx"><span class="kd">const</span> <span class="nx">pokemons</span><span class="p">:</span> <span class="kr">any</span><span class="p">[]</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span>
+        <span class="na">id</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="na">sprite</span><span class="p">:</span>
+          <span class="dl">"</span><span class="s2">https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png</span><span class="dl">"</span><span class="p">,</span>
+      <span class="p">},{</span>
+        <span class="na">id</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+        <span class="na">sprite</span><span class="p">:</span>
+          <span class="dl">"</span><span class="s2">https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/2.png</span><span class="dl">"</span><span class="p">,</span>
+      <span class="p">},</span>
+  <span class="p">];</span>
+
+<span class="kd">const</span> <span class="nx">PokeOverview</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">(</span>
+    <span class="p">&lt;</span><span class="nc">PokeList</span><span class="p">&gt;</span>
+        <span class="si">{</span> <span class="nx">pokemons</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">pokemon</span> <span class="o">=&gt;</span> <span class="p">(</span>
+                <span class="p">&lt;</span><span class="nc">PokeListItem</span>
+                    <span class="na">sprite</span><span class="p">=</span><span class="si">{</span><span class="nx">pokemon</span><span class="p">.</span><span class="nx">sprite</span><span class="si">}</span>
+                    <span class="na">onClick</span><span class="p">=</span><span class="si">{</span><span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">`you clicked pokemon: </span><span class="p">${</span><span class="nx">pokemon</span><span class="p">}</span><span class="s2">`</span><span class="p">)}</span><span class="si">}</span>
+                    <span class="na">key</span><span class="p">=</span><span class="si">{</span><span class="nx">pokemon</span><span class="p">.</span><span class="nx">id</span><span class="si">}</span> <b class="conum">(1)</b>
+                <span class="p">/&gt;</span>
+            <span class="p">));</span>
+        <span class="si">}</span>
+    <span class="p">&lt;/</span><span class="nc">PokeList</span><span class="p">&gt;</span>
+<span class="p">);</span></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>When creating react components through a map function you have to provide a unique key to every react component you created. In our case it&#8217;s the pokemon ID.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_pokelist_passing_properties">4.2.2. PokeList: passing properties</h4>
+<div class="paragraph">
+<p>Now that we&#8217;ve seen how we can build a component with children through composition, we&#8217;ll now take a look at how to render our PokeListItems when passing properties. This approach has some advantages over the method with passing children, most important we can typecheck the properties we&#8217;re expecting to receive.<br>
+In our case, since Pokemon is a complex type, we&#8217;ll have to create an interface first to define our type, for now we&#8217;ll keep it together with our component but in a later phase we&#8217;ll move this into it&#8217;s own file.</p>
+</div>
+<div class="paragraph">
+<p><sub>src/components/PokeList/index.tsx</sub></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="tsx"><span class="k">import</span> <span class="nx">React</span><span class="p">,</span> <span class="p">{</span> <span class="nx">FC</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">react</span><span class="dl">"</span><span class="p">;</span>
+<span class="k">import</span> <span class="nx">styled</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">styled-components</span><span class="dl">"</span><span class="p">;</span>
+<span class="k">import</span> <span class="nx">PokeListItem</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">./../PokeListItem</span><span class="dl">"</span><span class="p">;</span> <b class="conum">(1)</b>
+
+<span class="k">export</span> <span class="kr">interface</span> <span class="nx">Pokemon</span> <span class="p">{</span> <b class="conum">(2)</b>
+  <span class="nl">id</span><span class="p">:</span> <span class="kr">number</span><span class="p">;</span>
+  <span class="nl">sprite</span><span class="p">:</span> <span class="kr">string</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">export</span> <span class="kr">interface</span> <span class="nx">PokeListProps</span> <span class="p">{</span>
+  <span class="nl">pokemons</span><span class="p">:</span> <span class="nx">Pokemon</span><span class="p">[];</span> <b class="conum">(3)</b>
+<span class="p">}</span>
+
+<span class="kd">const</span> <span class="nx">PokeListFrame</span> <span class="o">=</span> <span class="nx">styled</span><span class="p">.</span><span class="nx">div</span><span class="s2">`
+  background-color: #bff9ff;
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+`</span><span class="p">;</span>
+
+<span class="kd">const</span> <span class="nx">handlePokeListItemClick</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span> <b class="conum">(4)</b>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">you have clicked a poke list item!</span><span class="dl">"</span><span class="p">);</span>
+<span class="p">};</span>
+
+<span class="kd">const</span> <span class="nx">PokeList</span><span class="p">:</span> <span class="nx">FC</span><span class="o">&lt;</span><span class="nx">PokeListProps</span><span class="o">&gt;</span> <span class="o">=</span> <span class="p">({</span> <span class="nx">pokemons</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="p">(</span> <b class="conum">(5)</b>
+  <span class="p">&lt;</span><span class="nc">PokeListFrame</span><span class="p">&gt;</span>
+    <span class="si">{</span><span class="nx">pokemons</span><span class="p">.</span><span class="nx">map</span><span class="p">((</span><span class="nx">pokemon</span><span class="p">:</span> <span class="nx">Pokemon</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">(</span> <b class="conum">(6)</b>
+      <span class="p">&lt;</span><span class="nc">PokeListItem</span>
+        <span class="na">sprite</span><span class="p">=</span><span class="si">{</span><span class="nx">pokemon</span><span class="p">.</span><span class="nx">sprite</span><span class="si">}</span>
+        <span class="na">onClick</span><span class="p">=</span><span class="si">{</span><span class="nx">handlePokeListItemClick</span><span class="si">}</span>
+        <span class="na">key</span><span class="p">=</span><span class="si">{</span><span class="nx">pokemon</span><span class="p">.</span><span class="nx">id</span><span class="si">}</span>
+      <span class="p">/&gt;</span>
+    <span class="p">))</span><span class="si">}</span>
+  <span class="p">&lt;/</span><span class="nc">PokeListFrame</span><span class="p">&gt;</span>
+<span class="p">);</span>
+
+<span class="k">export</span> <span class="k">default</span> <span class="nx">PokeList</span><span class="p">;</span></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>Import the PokeListItem component into our PokeList component.</p>
+</li>
+<li>
+<p>We first define the structure of our complex Pokemon type through an interface.</p>
+</li>
+<li>
+<p>We define pokemons as an array of Pokemon type objects in our component&#8217;s properties interface.</p>
+</li>
+<li>
+<p>Since we moved everything inside the pokelist, we also have to create an onClick handler to pass down to the PokeListItem.</p>
+</li>
+<li>
+<p>We pass PokeListProps as type to FC and extract the pokemons property out of it using object deconstruction.</p>
+</li>
+<li>
+<p>The map function that renders the children is now included in the PokeList component, by doing this we move all responsibilities concerning the rendering of this component&#8217;s child components to the PokeList component. This makes our code less error prone and more future proof.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>After this refactoring we can utilize this component in a more concise way, like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="jsx"><span class="kd">const</span> <span class="nx">pokemons</span><span class="p">:</span> <span class="nx">Pokemon</span><span class="p">[]</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span>
+        <span class="na">id</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="na">sprite</span><span class="p">:</span>
+          <span class="dl">"</span><span class="s2">https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png</span><span class="dl">"</span><span class="p">,</span>
+      <span class="p">},{</span>
+        <span class="na">id</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+        <span class="na">sprite</span><span class="p">:</span>
+          <span class="dl">"</span><span class="s2">https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/2.png</span><span class="dl">"</span><span class="p">,</span>
+      <span class="p">},</span>
+  <span class="p">];</span>
+
+<span class="kd">const</span> <span class="nx">PokeOverview</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">(</span>
+    <span class="p">&lt;</span><span class="nc">PokeList</span> <span class="na">pokemons</span><span class="p">=</span><span class="si">{</span><span class="nx">pokemons</span><span class="si">}</span> <span class="p">/&gt;</span>
+<span class="p">);</span></code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+When splitting a piece of software in distinct sections of code that each addresses it&#8217;s own responsibility we talk about <em>Separation of Concerns</em>. This is a design principle in software development that makes your code modular and reusable. i.e.: presentational components vs logical components
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_quality_quality_quality">4.3. Quality, Quality, Quality</h3>
+<div class="paragraph">
+<p>As stated in the previous chapter, quality is often an overlooked aspect of software development. However, if you, by accident, break a piece of code you&#8217;ve written 3 months ago that didn&#8217;t had automated testing on it. It&#8217;s a real PITA to fix.<br>
+So do yourself a favor and create a habit of writing tests/documentation right after you&#8217;ve written your component (or even better before, if you&#8217;re following TDD principles).</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+TDD uitleggen XD
+</td>
+</tr>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_documentation_with_storybook">4.3.1. Documentation with Storybook</h4>
+
+</div>
+<div class="sect3">
+<h4 id="_snapshot_testing_with_jest_2">4.3.2. Snapshot testing with Jest</h4>
+
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_stateless_vs_stateful_components">5. Stateless vs Stateful Components</h2>
 <div class="sectionbody">
 
+</div>
+</div>
+<h1 id="_iii_state_management_middleware" class="sect0">III. State management &amp; Middleware</h1>
+<div class="sect1">
+<h2 id="_redux_stuff">6. redux stuff</h2>
+<div class="sectionbody">
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="_middleware">7. Middleware</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_redux_thunk">7.1. Redux Thunk</h3>
+
+</div>
+<div class="sect2">
+<h3 id="_react_router">7.2. React router</h3>
+
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_whats_next">8. What&#8217;s next?</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_securing_your_application">8.1. Securing your application</h3>
+
+</div>
+<div class="sect2">
+<h3 id="_serverless">8.2. Serverless</h3>
+
+</div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2021-06-15 11:20:06 UTC
+Last updated 2021-06-28 21:55:09 UTC
 </div>
 </div>
 </body>

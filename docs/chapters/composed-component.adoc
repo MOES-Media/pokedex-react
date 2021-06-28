@@ -1,0 +1,43 @@
+== Composed Components: building components out of components
+
+In the previous chapter we saw how we can build a simple standalone component, although pretty basic this example already showed how versatile a tool like React can be. +
+Thanks to tooling like Storybook we have a visual tool to show and document our components with and with Jest we made sure our components are tested. 
+
+=== Children
+
+As you saw in the previous chapter, React components can be composed from different DOM elements. However if we always had to create react components out of DOM elements the reusability would soon be non-existent. So how exactly can we create composed components without having to repeat ourselves? +
+_Children!_ Children are a special kind of prop in React that represent content that can be included in your component. This property accepts everything that is a valid React Element, every React component, DOM-element and String is a valid child of a react component.
+
+NOTE: Writing reusable code is one of the most important principles in software development. It is aimed at reducing the repetition of software patterns through means of abstraction. This principle is commonly known as the DRY principle (Don't Repeat Yourself)
+
+Take a look at the examples below and see for yourself:
+
+include::snippets/ch4/01.children.adoc[]
+
+=== Component: PokeList
+
+image::assets/img/pokelist.png[caption="Component - PokeList", role=right]
+
+As an example of a composed component we'll be building the PokeList, this is a simple component that provides a surrounding div with a background image. This div will hold our PokeListItems we created in the previous chapter. +
+We'll build this component in 2 different ways, just like in the previous chapter. Why? Because just as with styling React isn't opinionated on how you build your components. So in our first example we'll build a PokeList component that accepts children and we'll pass our PokeListItems as children. In the second example we'll pass an array of pokemons which will be used to generate the children. +
+
+Before we begin, create a new folder under `src/components` called 'PokeList' with a file index.tsx inside.
+
+==== PokeList: creating a component that accepts children
+
+include::snippets/ch4/02.pokelist-with-children.adoc[]
+
+==== PokeList: passing properties
+
+include::snippets/ch4/03.pokelist-with-pokemonprops.adoc[]
+
+=== Quality, Quality, Quality
+
+As stated in the previous chapter, quality is often an overlooked aspect of software development. However, if you, by accident, break a piece of code you've written 3 months ago that didn't had automated testing on it. It's a real PITA to fix. +
+So do yourself a favor and create a habit of writing tests/documentation right after you've written your component (or even better before, if you're following TDD principles).
+
+NOTE: TDD uitleggen XD
+
+==== Documentation with Storybook
+
+==== Snapshot testing with Jest

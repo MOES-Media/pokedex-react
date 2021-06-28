@@ -1,0 +1,56 @@
+We'll start by creating the first example, where we'll pass the PokeListItems from the previous chapter as children. +
+First we'll need the PokeList Component, as stated in the previous chapter you're free to choose how you do your styling (css/SASS/styled-components/...), but for the sake of consistency we'll use styled-components here and every other example throughout this tutorial.
+
+~src/components/PokeList/index.tsx~ +
+[source,tsx]
+----
+import React, { FC, PropsWithChildren } from "react";
+import styled from "styled-components";
+
+const StyledPokeList = styled.div`
+  background-color: #bff9ff;
+  box-shadow: inset 0 0 1.25rem rgba(0, 0, 0, 0.5);
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+`;
+
+const PokeList: FC<PropsWithChildren<any>> = ({children}) => (
+    <StyledPokeList>
+        {children}
+    </StyledPokeList>
+);
+
+export default PokeList;
+----
+
+We then can use this component in the following fashion:
+
+[source,tsx]
+----
+const pokemons: any[] = [
+    {
+        id: 1,
+        sprite:
+          "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png",
+      },{
+        id: 2,
+        sprite:
+          "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/2.png",
+      },
+  ];
+
+const PokeOverview = () => (
+    <PokeList>
+        { pokemons.map(pokemon => (
+                <PokeListItem
+                    sprite={pokemon.sprite}
+                    onClick={() => {console.log(`you clicked pokemon: ${pokemon}`)}}
+                    key={pokemon.id} <.>
+                />
+            ));
+        }
+    </PokeList>
+);
+----
+<.> When creating react components through a map function you have to provide a unique key to every react component you created. In our case it's the pokemon ID.

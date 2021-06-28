@@ -1,0 +1,75 @@
+Now that we've seen how we can build a component with children through composition, we'll now take a look at how to render our PokeListItems when passing properties. This approach has some advantages over the method with passing children, most important we can typecheck the properties we're expecting to receive. +
+In our case, since Pokemon is a complex type, we'll have to create an interface first to define our type, for now we'll keep it together with our component but in a later phase we'll move this into it's own file.
+
+~src/components/PokeList/index.tsx~
+[source,tsx]
+----
+import React, { FC } from "react";
+import styled from "styled-components";
+import PokeListItem from "./../PokeListItem"; <.>
+
+export interface Pokemon { <.>
+  id: number;
+  sprite: string;
+}
+
+export interface PokeListProps {
+  pokemons: Pokemon[]; <.>
+}
+
+const PokeListFrame = styled.div`
+  background-color: #bff9ff;
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+`;
+
+const handlePokeListItemClick = () => { <.>
+  console.log("you have clicked a poke list item!");
+};
+
+const PokeList: FC<PokeListProps> = ({ pokemons }) => ( <.>
+  <PokeListFrame>
+    {pokemons.map((pokemon: Pokemon) => ( <.>
+      <PokeListItem
+        sprite={pokemon.sprite}
+        onClick={handlePokeListItemClick}
+        key={pokemon.id}
+      />
+    ))}
+  </PokeListFrame>
+);
+
+export default PokeList;
+
+----
+<.> Import the PokeListItem component into our PokeList component.
+<.> We first define the structure of our complex Pokemon type through an interface.
+<.> We define pokemons as an array of Pokemon type objects in our component's properties interface.
+<.> Since we moved everything inside the pokelist, we also have to create an onClick handler to pass down to the PokeListItem.
+<.> We pass PokeListProps as type to FC and extract the pokemons property out of it using object deconstruction.
+<.> The map function that renders the children is now included in the PokeList component, by doing this we move all responsibilities concerning the rendering of this component's child components to the PokeList component. This makes our code less error prone and more future proof.
+
+After this refactoring we can utilize this component in a more concise way, like this:
+
+[source,jsx]
+----
+const pokemons: Pokemon[] = [
+    {
+        id: 1,
+        sprite:
+          "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png",
+      },{
+        id: 2,
+        sprite:
+          "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/2.png",
+      },
+  ];
+
+const PokeOverview = () => (
+    <PokeList pokemons={pokemons} />
+);
+----
+
+NOTE: When splitting a piece of software in distinct sections of code that each addresses it's own responsibility we talk about _Separation of Concerns_. This is a design principle in software development that makes your code modular and reusable. i.e.: presentational components vs logical components

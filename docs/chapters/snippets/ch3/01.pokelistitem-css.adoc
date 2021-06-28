@@ -1,0 +1,59 @@
+* Create a new folder `src/component/PokoListItem`
+
+* Create a new file inside this folder `pokelistitem.css` with following content in it.
+
+~src/components/PokeListItem/pokelistitem.css~
+[source#src/components/PokeListItem/pokelistitem.css,css]
+----
+.pokelistitem {
+  width: 120px;
+  height: 120px;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16);
+  margin: 10px;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+----
+
+* Create a new file inside this folder `index.tsx` with following content
+
+~src/components/PokeListItem/index.tsx~
+[source#src/components/PokeListItem/index.tsx,tsx]
+----
+import React, { Component } from 'react'; <.>
+import 'pokelistitem.css'; <.>
+
+export interface PokeListItemProps { <.>
+    sprite: string;
+    onClick: (event?: MouseEvent) => void <.>
+}
+
+class PokeListItemComponent extends Component<PokeListItemProps, {}> { <.>
+
+    render() { <.>
+        return (
+            <button 
+                role="button" 
+                className="pokelistitem" 
+                style={{
+                    backgroundImage: this.props.sprite <.>
+                }}
+            >);
+    }
+}
+
+export default PokeListItemComponent; <.>
+----
+
+<.> Every tsx/jsx file starts with importing the default export of react, this is neccesary for the transpilation process. During this process JSX is wrapped inside `React.createElement` and without this import we would get errors. We also import the Component class for later use. 
+<.> import your css file.
+<.> Define the properties your component will receive
+<.> onClick is a Function that receives an optional parameter event of type MouseEvent and has return type void.
+<.> In React there are multiple ways of creating a component, here we create a class that extends the Component class of react. In order to make our component aware of the shape of it's properties and state (more on that in chapter 5) we have to add the correct types. In this case our properties will have the shape of PokeListItemProps, but since we don't use state we pass an empty object.
+<.> Every react component has a render function, this function returns, in a descriptive way, how our component will render in the dom. This syntax is called JSX and is a combination of javascript and XML. Being an extension of XML it follows basic XML rules of closing elements and having only one top element.
+<.> Every react class has access to it's properties through `this.props`, the shape of this properties object is the same as the type we used to type our Component.
+<.> Exporting our PokeListItem as a module with a default export.
+
+And there you have it, our first React component. In the next part we'll refactor this piece of code to use Styled Components instead of css for styling.

@@ -3,7 +3,7 @@ Pokedex React Tutorial
 Jeroen Nouws <pokedex@moes-media.be>
 :doctype: book
 :toc:
-:toc-title: Table of Contents of {doctitle}
+:toc-title: {doctitle} - T.O.C.
 :toclevels: 2
 :description: Accompanying tutorial for the Pokedex React Bootcamp
 :numbered:
@@ -30,6 +30,7 @@ All code is available on link:https://github.com/MOES-Media/pokedex-react[Github
 All commands in this tutorial are run in a bash shell on linux and not tested in windows based terminals like command prompt or Powershell.
 
 = I. Introduction 
+
 include::chapters/typescript-primer.adoc[]
 
 include::chapters/project-setup.adoc[]
@@ -41,5 +42,22 @@ NOTE: 'Seperation of Concerns' is a design principle for seperating your code in
 
 include::chapters/first-component.adoc[]
 
+include::chapters/composed-component.adoc[]
+
+include::chapters/stateless-vs-statefull-components.adoc[]
+
 = III. State management & Middleware
+
 == redux stuff
+
+== Middleware
+
+=== Redux Thunk
+
+=== React router
+
+== What's next?
+
+=== Securing your application
+
+=== Serverless

@@ -20,13 +20,17 @@ We'll start by creating this component with basic html styling, afterwards we'll
 
 ==== Styling with css
 
-include::samples/first-component/pokelistitem-css.adoc[]
+include::snippets/ch3/01.pokelistitem-css.adoc[]
 
 ==== Styling with Styled Components
+
+include::snippets/ch3/02.pokelistitem-styled-component.adoc[]
 
 === Visual testing & documentation with Storybook
 
 ==== Setting up storybook
+
+==== Writing our first story
 
 === Quality through testing
 

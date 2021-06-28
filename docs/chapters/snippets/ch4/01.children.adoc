@@ -1,0 +1,37 @@
+[source,tsx]
+----
+const ChildComponent: FC<any> = () => (<h1>I am a child component.</h1>);
+
+const ComponentWithChildren: FC<PropsWithChildren<any>> = ({children}) => ( <.>
+    <div>
+        {children} <.>
+    </div>
+);
+
+const DomElementChildren: FC<any> = () => (
+    <ComponentWithChildren>
+        <p>FooBar paragraph</p> <.>
+    </ComponentWithChildren>
+);
+
+const StringChildren: FC<any> = () => (
+    <ComponentWithChildren>
+        Hello World! <.>
+    </ComponentWithChildren>
+);
+
+const ReactComponentChildren = () => (
+    <ComponentWithChildren>
+        <ChildComponent />
+        <ChildComponent /> <.>
+    </ComponentWithChildren>
+);
+----
+
+<.> Before we can start using our children we first need to make typescript aware we are using PropsWithChildren as a type, this is a convenience type that's located in the React package. This type also takes a generic, in this case any, to represent the props other than children. We use object deconstruction to extract the children out our properties.
+<.> In order for React to know where to render the children we need to declare the correct position of the children.
+<.> This is an example of how to pass DOM elements as children to a React component.
+<.> This is an example of how to pass a String to a react component as a child.
+<.> This is an example of how to pass another React component as a child to the parent React component, as shown here, you are not restricted to just passing 1 child, you can add multiple children, as well as a combination of all 3 different React Elements.
+
+NOTE: Using children to compose more complex structures is called _composition_.

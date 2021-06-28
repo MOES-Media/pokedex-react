@@ -2,12 +2,10 @@ import React, { FC } from "react";
 import styled from "styled-components";
 
 type StyledPokeListItemProps = {
-  active: boolean;
   backgroundImage: string;
 };
 
 export interface PokeListItemProps {
-  active?: boolean;
   sprite: string;
   onClick: (event?: any) => void;
 }
@@ -22,11 +20,10 @@ const StyledPokeListItem = styled.button<StyledPokeListItemProps>`
   ${({ backgroundImage }) => `background-image: url(${backgroundImage});`}
   background-position: center;
   background-repeat: no-repeat;
-  ${({ active }) => `background-color: ${active ? "red" : "white"};`}
 `;
 
-const PokeListItem: FC<PokeListItemProps> = ({ active = false, sprite, onClick }) => (
-  <StyledPokeListItem active={active} backgroundImage={sprite} onClick={onClick} role="button"/>
+const PokeListItem: FC<PokeListItemProps> = ({ sprite, onClick }) => (
+  <StyledPokeListItem backgroundImage={sprite} onClick={onClick} role="button"/>
 );
 
 export default PokeListItem;
