@@ -1,16 +1,17 @@
 import React, { FC } from "react";
 import styled from "styled-components";
-import { PokeListItem } from "./../index";
+import PokeListItem from "./../PokeListItem";
 
 export interface Pokemon {
   id: number;
   sprite: string;
 }
+
 export interface PokeListProps {
   pokemons: Pokemon[];
 }
 
-const PokeListFrame = styled.div`
+const StyledPokeList = styled.div`
   background-color: #bff9ff;
   box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
   padding: 1rem;
@@ -23,7 +24,7 @@ const handlePokeListItemClick = () => {
 };
 
 const PokeList: FC<PokeListProps> = ({ pokemons }) => (
-  <PokeListFrame>
+  <StyledPokeList>
     {pokemons.map((pokemon: Pokemon) => (
       <PokeListItem
         sprite={pokemon.sprite}
@@ -31,7 +32,7 @@ const PokeList: FC<PokeListProps> = ({ pokemons }) => (
         key={pokemon.id}
       />
     ))}
-  </PokeListFrame>
+  </StyledPokeList>
 );
 
 export default PokeList;

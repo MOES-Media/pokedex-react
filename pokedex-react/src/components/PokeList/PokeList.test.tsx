@@ -3,7 +3,7 @@ import renderer from 'react-test-renderer';
 
 import PokeList, { Pokemon } from ".";
 
-const mockPokemons: Pokemon[] = [
+const testPokemons: Pokemon[] = [
   {
     id: 1,
     sprite: "foobar",
@@ -15,6 +15,6 @@ const mockPokemons: Pokemon[] = [
 ];
 
 test("Component: PokeList should render correctly", () => {
-    const snapshot = renderer.create(<PokeList pokemons={mockPokemons} />);
+    const snapshot = renderer.create(<PokeList pokemons={testPokemons} />);
     expect(snapshot).toMatchSnapshot();
 });

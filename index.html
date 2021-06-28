@@ -445,7 +445,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <span id="email" class="email"><a href="mailto:pokedex@moes-media.be">pokedex@moes-media.be</a></span><br>
 </div>
 <div id="toc" class="toc">
-<div id="toctitle">Table of Contents of Pokedex React Tutorial</div>
+<div id="toctitle">Pokedex React Tutorial - T.O.C.</div>
 <ul class="sectlevel1">
 <li><a href="#_preface">Preface</a>
 <ul class="sectlevel2">
@@ -479,11 +479,31 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_quality_through_testing">3.3. Quality through testing</a></li>
 </ul>
 </li>
+<li><a href="#_composed_components_building_components_out_of_components">4. Composed Components: building components out of components</a>
+<ul class="sectlevel2">
+<li><a href="#_children">4.1. Children</a></li>
+<li><a href="#_component_pokelist">4.2. Component: PokeList</a></li>
+<li><a href="#_quality_quality_quality">4.3. Quality, Quality, Quality</a></li>
+</ul>
+</li>
+<li><a href="#_stateless_vs_stateful_components">5. Stateless vs Stateful Components</a></li>
 </ul>
 </li>
 <li><a href="#_iii_state_management_middleware">III. State management &amp; Middleware</a>
 <ul class="sectlevel1">
-<li><a href="#_redux_stuff">4. redux stuff</a></li>
+<li><a href="#_redux_stuff">6. redux stuff</a></li>
+<li><a href="#_middleware">7. Middleware</a>
+<ul class="sectlevel2">
+<li><a href="#_redux_thunk">7.1. Redux Thunk</a></li>
+<li><a href="#_react_router">7.2. React router</a></li>
+</ul>
+</li>
+<li><a href="#_whats_next">8. What&#8217;s next?</a>
+<ul class="sectlevel2">
+<li><a href="#_securing_your_application">8.1. Securing your application</a></li>
+<li><a href="#_serverless">8.2. Serverless</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -761,17 +781,341 @@ Done in 45.15s.</pre>
 </div>
 </div>
 </div>
-<h1 id="_iii_state_management_middleware" class="sect0">III. State management &amp; Middleware</h1>
 <div class="sect1">
-<h2 id="_redux_stuff">4. redux stuff</h2>
+<h2 id="_composed_components_building_components_out_of_components">4. Composed Components: building components out of components</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In the previous chapter we saw how we can build a simple standalone component, although pretty basic this example already showed how versatile a tool like React can be.<br>
+Thanks to tooling like Storybook we have a visual tool to show and document our components with and with Jest we made sure our components are tested.</p>
+</div>
+<div class="sect2">
+<h3 id="_children">4.1. Children</h3>
+<div class="paragraph">
+<p>As you saw in the previous chapter, React components can be composed from different DOM elements. However if we always had to create react components out of DOM elements the reusability would soon be non-existent. So how exactly can we create composed components without having to repeat ourselves?<br>
+<em>Children!</em> Children are a special kind of prop in React that represent content that can be included in your component. This property accepts everything that is a valid React Element, every React component, DOM-element and String is a valid child of a react component.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+Writing reusable code is one of the most important principles in software development. It is aimed at reducing the repetition of software patterns through means of abstraction. This principle is commonly known as the DRY principle (Don&#8217;t Repeat Yourself)
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Take a look at the examples below and see for yourself:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-jsx" data-lang="jsx">const ChildComponent: FC&lt;any&gt; = () =&gt; (&lt;h1&gt;I am a child component.&lt;/h1&gt;);
+
+const ComponentWithChildren: FC&lt;PropsWithChildren&lt;any&gt;&gt; = ({children}) =&gt; ( <b class="conum">(1)</b>
+    &lt;div&gt;
+        {children} <b class="conum">(2)</b>
+    &lt;/div&gt;
+);
+
+const DomElementChildren: FC&lt;any&gt; = () =&gt; (
+    &lt;ComponentWithChildren&gt;
+        &lt;p&gt;FooBar paragraph&lt;/p&gt; <b class="conum">(3)</b>
+    &lt;/ComponentWithChildren&gt;
+);
+
+const StringChildren: FC&lt;any&gt; = () =&gt; (
+    &lt;ComponentWithChildren&gt;
+        Hello World! <b class="conum">(4)</b>
+    &lt;/ComponentWithChildren&gt;
+);
+
+const ReactComponentChildren = () =&gt; (
+    &lt;ComponentWithChildren&gt;
+        &lt;ChildComponent /&gt;
+        &lt;ChildComponent /&gt; <b class="conum">(5)</b>
+    &lt;/ComponentWithChildren&gt;
+);</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>Before we can start using our children we first need to make typescript aware we are using PropsWithChildren as a type, this is a convenience type that&#8217;s located in the React package. This type also takes a generic, in this case any, to represent the props other than children. We use object deconstruction to extract the children out our properties.</p>
+</li>
+<li>
+<p>In order for React to know where to render the children we need to declare the correct position of the children.</p>
+</li>
+<li>
+<p>This is an example of how to pass DOM elements as children to a React component.</p>
+</li>
+<li>
+<p>This is an example of how to pass a String to a react component as a child.</p>
+</li>
+<li>
+<p>This is an example of how to pass another React component as a child to the parent React component, as shown here, you are not restricted to just passing 1 child, you can add multiple children, as well as a combination of all 3 different React Elements.</p>
+</li>
+</ol>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+Using children to compose more complex structures is called <em>composition</em>.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_component_pokelist">4.2. Component: PokeList</h3>
+<div class="imageblock right">
+<div class="content">
+<img src="assets/img/pokelist.png" alt="pokelist">
+</div>
+</div>
+<div class="paragraph">
+<p>As an example of a composed component we&#8217;ll be building the PokeList, this is a simple component that provides a surrounding div with a background image. This div will hold our PokeListItems we created in the previous chapter.<br>
+We&#8217;ll build this component in 2 different ways, just like in the previous chapter. Why? Because just as with styling React isn&#8217;t opinionated on how you build your components. So in our first example we&#8217;ll build a PokeList component that accepts children and we&#8217;ll pass our PokeListItems as children. In the second example we&#8217;ll pass an array of pokemons which will be used to generate the children.<br></p>
+</div>
+<div class="paragraph">
+<p>Before we begin, create a new folder under <code>src/components</code> called <em>PokeList</em> with a file index.tsx inside.</p>
+</div>
+<div class="sect3">
+<h4 id="_pokelist_creating_a_component_that_accepts_children">4.2.1. PokeList: creating a component that accepts children</h4>
+<div class="paragraph">
+<p>We&#8217;ll start by creating the first example, where we&#8217;ll pass the PokeListItems from the previous chapter as children.<br>
+First we&#8217;ll need the PokeList Component, as stated in the previous chapter you&#8217;re free to choose how you do your styling (css/SASS/styled-components/&#8230;&#8203;), but for the sake of consistency we&#8217;ll use styled-components here and every other example throughout this tutorial.</p>
+</div>
+<div class="paragraph">
+<p><sub>src/components/PokeList/index.tsx</sub><br></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-jsx" data-lang="jsx">import React, { FC, PropsWithChildren } from "react";
+import styled from "styled-components";
+
+const StyledPokeList = styled.div`
+  background-color: #bff9ff;
+  box-shadow: inset 0 0 1.25rem rgba(0, 0, 0, 0.5);
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+`;
+
+const PokeList: FC&lt;PropsWithChildren&lt;any&gt;&gt; = ({children}) =&gt; (
+    &lt;StyledPokeList&gt;
+        {children}
+    &lt;/StyledPokeList&gt;
+);
+
+export default PokeList;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We then can use this component in the following fashion:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-jsx" data-lang="jsx">const pokemons: any[] = [
+    {
+        id: 1,
+        sprite:
+          "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png",
+      },{
+        id: 2,
+        sprite:
+          "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/2.png",
+      },
+  ];
+
+const PokeOverview = () =&gt; (
+    &lt;PokeList&gt;
+        { pokemons.map(pokemon =&gt; (
+                &lt;PokeListItem
+                    sprite={pokemon.sprite}
+                    onClick={() =&gt; {console.log(`you clicked pokemon: ${pokemon}`)}}
+                    key={pokemon.id} <b class="conum">(1)</b>
+                /&gt;
+            ));
+        }
+    &lt;/PokeList&gt;
+);</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>When creating react components through a map function you have to provide a unique key to every react component you created. In our case it&#8217;s the pokemon ID.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_pokelist_passing_properties">4.2.2. PokeList: passing properties</h4>
+<div class="paragraph">
+<p>Now that we&#8217;ve seen how we can build a component with children through composition, we&#8217;ll now take a look at how to render our PokeListItems when passing properties. This approach has some advantages over the method with passing children, most important we can typecheck the properties we&#8217;re expecting to receive.<br>
+In our case, since Pokemon is a complex type, we&#8217;ll have to create an interface first to define our type, for now we&#8217;ll keep it together with our component but in a later phase we&#8217;ll move this into it&#8217;s own file.</p>
+</div>
+<div class="paragraph">
+<p><sub>src/components/PokeList/index.tsx</sub></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-jsx" data-lang="jsx">import React, { FC } from "react";
+import styled from "styled-components";
+import PokeListItem from "./../PokeListItem"; <b class="conum">(1)</b>
+
+export interface Pokemon { <b class="conum">(2)</b>
+  id: number;
+  sprite: string;
+}
+
+export interface PokeListProps {
+  pokemons: Pokemon[]; <b class="conum">(3)</b>
+}
+
+const PokeListFrame = styled.div`
+  background-color: #bff9ff;
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+`;
+
+const handlePokeListItemClick = () =&gt; { <b class="conum">(4)</b>
+  console.log("you have clicked a poke list item!");
+};
+
+const PokeList: FC&lt;PokeListProps&gt; = ({ pokemons }) =&gt; ( <b class="conum">(5)</b>
+  &lt;PokeListFrame&gt;
+    {pokemons.map((pokemon: Pokemon) =&gt; ( <b class="conum">(6)</b>
+      &lt;PokeListItem
+        sprite={pokemon.sprite}
+        onClick={handlePokeListItemClick}
+        key={pokemon.id}
+      /&gt;
+    ))}
+  &lt;/PokeListFrame&gt;
+);
+
+export default PokeList;</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>Import the PokeListItem component into our PokeList component.</p>
+</li>
+<li>
+<p>We first define the structure of our complex Pokemon type through an interface.</p>
+</li>
+<li>
+<p>We define pokemons as an array of Pokemon type objects in our component&#8217;s properties interface.</p>
+</li>
+<li>
+<p>Since we moved everything inside the pokelist, we also have to create an onClick handler to pass down to the PokeListItem.</p>
+</li>
+<li>
+<p>We pass PokeListProps as type to FC and extract the pokemons property out of it using object deconstruction.</p>
+</li>
+<li>
+<p>The map function that renders the children is now included in the PokeList component, by doing this we move all responsibilities concerning the rendering of this component&#8217;s child components to the PokeList component. This makes our code less error prone and more future proof.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>After this refactoring we can utilize this component in a more concise way, like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-jsx" data-lang="jsx">const pokemons: Pokemon[] = [
+    {
+        id: 1,
+        sprite:
+          "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png",
+      },{
+        id: 2,
+        sprite:
+          "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/2.png",
+      },
+  ];
+
+const PokeOverview = () =&gt; (
+    &lt;PokeList pokemons={pokemons} /&gt;
+);</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+When splitting a piece of software in distinct sections of code that each addresses it&#8217;s own responsibility we talk about <em>Separation of Concerns</em>. This is a design principle in software development that makes your code modular and reusable. i.e.: presentational components vs logical components
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_quality_quality_quality">4.3. Quality, Quality, Quality</h3>
+<div class="paragraph">
+<p>As stated in the previous chapter, quality is often an overlooked aspect of software development. However, if you, by accident, break a piece of code you&#8217;ve written 3 months ago that didn&#8217;t had automated testing on it. It&#8217;s a real PITA to fix.<br>
+So do yourself a favor and create a habit of writing tests/documentation right after you&#8217;ve written your component (or even better before).</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_stateless_vs_stateful_components">5. Stateless vs Stateful Components</h2>
 <div class="sectionbody">
 
+</div>
+</div>
+<h1 id="_iii_state_management_middleware" class="sect0">III. State management &amp; Middleware</h1>
+<div class="sect1">
+<h2 id="_redux_stuff">6. redux stuff</h2>
+<div class="sectionbody">
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="_middleware">7. Middleware</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_redux_thunk">7.1. Redux Thunk</h3>
+
+</div>
+<div class="sect2">
+<h3 id="_react_router">7.2. React router</h3>
+
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_whats_next">8. What&#8217;s next?</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_securing_your_application">8.1. Securing your application</h3>
+
+</div>
+<div class="sect2">
+<h3 id="_serverless">8.2. Serverless</h3>
+
+</div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2021-06-15 09:23:54 UTC
+Last updated 2021-06-28 15:58:16 UTC
 </div>
 </div>
 </body>
