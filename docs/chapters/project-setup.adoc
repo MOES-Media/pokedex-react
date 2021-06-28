@@ -11,7 +11,7 @@ This setup might seem overkill for a project of this size and there are better s
 
 Our Application has a very basic layout consisting of 2 columns, in the left hand column we'll display a list of selectable pokemons, while in the right side column we'll display either the details of the selected pokémon or a placeholder text.
 
-image::assets/img/wireframe.png[caption="Figure - Wireframe"]
+image::assets/img/wireframe.png["Figure - Wireframe"]
 
 ==== Datasource
 

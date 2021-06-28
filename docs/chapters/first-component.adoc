@@ -1,8 +1,26 @@
 == First Component: PokeListItem
 
+image:assets/img/pokelistitem.png["Figure - PokeListItem Component", role="right"] 
+Before we start building our first component we need to make a clear distinction between representational components and logical components. 
+
+* *Presentational Components*
+** Main concern: how things look
+** Usually contain both DOM markup and styles of their own
+** Have no dependencies on other part of the application like state 
+* *Logical Components*
+** Main concern: how things work
+** Is composed of presentational components, can but mostly don't have DOM markup
+** Loads data from the store and provide it to the presentational components
+
 === Component: PokeListItem
 
+The first component we are going to create is a PokeListItem. This is just a styled button that handles an onClick event. +
+Since this is a presentational component it needs to receive all it's props from the Container above and bubble it's events upwards. +
+We'll start by creating this component with basic html styling, afterwards we'll refac this to an implementation with styled-components.
+
 ==== Styling with css
+
+include::samples/first-component/pokelistitem-css.adoc[]
 
 ==== Styling with Styled Components
 

@@ -1,0 +1,52 @@
+* Create a new folder `src/component/PokoListItem`
+* Create a new file inside this folder `index.tsx` with following content
+
+[source#index.tsx,tsx]
+----
+import React, { Component } from 'react'; <.>
+import 'pokelistitem.css'; <.>
+
+export interface PokeListItemProps { <.>
+    sprite: string;
+    onClick: (event?: MouseEvent) => void <.>
+}
+
+class PokeListItemComponent extends Component<PokeListItemProps, {}> { <.>
+
+    render() { <.>
+        return (
+            <button 
+                role="button" 
+                class="pokelistitem" 
+                style={{
+                    backgroundImage: this.props.sprite
+                }}
+            >);
+    }
+}
+
+export default PokeListItemComponent; <.>
+----
+<.> foobar
+<.> foobar
+<.> foobar
+<.> foobar
+<.> foobar
+<.> foobar
+<.> foobar
+
+* Create a new file inside this folder `pokelistitem.css` with following content in it.
+
+[source#pokelistitem.css,css]
+----
+.pokelistitem {
+  width: 120px;
+  height: 120px;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16);
+  margin: 10px;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+----

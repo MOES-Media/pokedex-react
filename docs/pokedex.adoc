@@ -8,6 +8,7 @@ Jeroen Nouws <pokedex@moes-media.be>
 :description: Accompanying tutorial for the Pokedex React Bootcamp
 :numbered:
 :idprefixed:
+:source-highlighter: rouge
 
 Click here if you rather have a link:pokedex.pdf[PDF]
 
@@ -34,6 +35,10 @@ include::chapters/typescript-primer.adoc[]
 include::chapters/project-setup.adoc[]
 
 = II. Components & Containers
+In the next chapters we'll focus on building the UI with React, we'll do so by implementing the component/container pattern. By doing so we'll make a clear seperation of presentational components and logical components. 
+
+NOTE: 'Seperation of Concerns' is a design principle for seperating your code into distinctive sections or concerns. In our case presentational vs logical.
+
 include::chapters/first-component.adoc[]
 
 = III. State management & Middleware
