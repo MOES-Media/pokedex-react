@@ -1,31 +1,24 @@
 import React from "react";
-import { PokeListItem } from "./components";
-
-type Pokemon = {
-  sprite: string;
-};
+import { PokeList } from "./components";
+import { Pokemon } from "./components/PokeList";
 
 const pokemons: Pokemon[] = [
   {
+    id: 1,
     sprite:
-      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/1.png",
+      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png",
   },{
+    id: 2,
     sprite:
-      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/2.png",
+      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/2.png",
   },
 ];
 
 function App() {
 
-  const handlePokeListItemClick = () => {
-    console.log("you have clicked a poke list item!");
-  }
-
   return (
     <div className="App">
-      {pokemons.map((pokemon: Pokemon) => (
-        <PokeListItem sprite={pokemon.sprite} onClick={handlePokeListItemClick}/>
-      ))}
+      <PokeList pokemons={pokemons}/>      
     </div>
   );
 }
