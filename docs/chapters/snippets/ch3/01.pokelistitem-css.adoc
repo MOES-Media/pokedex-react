@@ -40,7 +40,7 @@ class PokeListItemComponent extends Component<PokeListItemProps, {}> { <.>
                 style={{
                     backgroundImage: this.props.sprite <.>
                 }}
-            >);
+            />);
     }
 }
 

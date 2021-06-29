@@ -1090,11 +1090,11 @@ We&#8217;ll start by creating this component with basic html styling, afterwards
                 <span class="na">style</span><span class="p">=</span><span class="si">{</span><span class="p">{</span>
                     <span class="na">backgroundImage</span><span class="p">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">sprite</span> <b class="conum">(7)</b>
                 <span class="p">}</span><span class="si">}</span>
-            <span class="p">&gt;</span>);
-    }
-}
+            <span class="p">/&gt;);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 
-export default PokeListItemComponent; <b class="conum">(8)</b></code></pre>
+<span class="k">export</span> <span class="k">default</span> <span class="nx">PokeListItemComponent</span><span class="p">;</span> <b class="conum">(8)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -1131,18 +1131,187 @@ export default PokeListItemComponent; <b class="conum">(8)</b></code></pre>
 </div>
 <div class="sect3">
 <h4 id="_styling_with_styled_components">3.1.2. Styling with Styled Components</h4>
+<div class="paragraph">
+<p>Now that we have our first component, styled with css, we&#8217;ll go over it once more and refactor it using styled components.<br>
+One of the drawbacks of styling with css is that your component and it&#8217;s styling are split in 2 locations, which is harder to process. Furthermore if you rely on conditional styling, when using css, your components will end up with a multitude of conditional checks for the right class names.<br>
+Using Styled Components will help keep our concerns of styling and component behaviour seperated, but since this is all javascript (or in our case typescript) and Styled Components return valid React Components. We can also pass properties and do our checks directly in our component, removing the need of complex conditionals to set the correct classnames on our component. Another added benefit of Styled Components being React Elements is that we can add specific css tests for it through the use of <a href="https://github.com/styled-components/jest-styled-components">jest-styled-components</a>.</p>
+</div>
+<div class="sect4">
+<h5 id="_adding_styled_components_to_our_project">Adding Styled Components to our project</h5>
+<div class="paragraph">
+<p>Before we can begin using Styled Components we need to install 2 dependencies, the first one is the Styled Components library itself. But since we&#8217;re using typescript we&#8217;ll also need to add the types of Styled Components.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>yarn add styled-components</code> will add the Styled Components library.</p>
+</li>
+<li>
+<p><code>yarn add -D @types/styled-components</code> will add the types to your project for typescript to use.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_refactoring_our_pokelistitem">Refactoring our PokeListItem</h5>
+<div class="paragraph">
+<p><sub>src/components/PokeListItem/index.tsx</sub></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="tsx"><span class="k">import</span> <span class="nx">React</span><span class="p">,</span> <span class="p">{</span> <span class="nx">FC</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">react</span><span class="dl">"</span><span class="p">;</span>
+<span class="k">import</span> <span class="nx">styled</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">styled-components</span><span class="dl">"</span><span class="p">;</span> <b class="conum">(1)</b>
 
+<span class="kr">interface</span> <span class="nx">StyledPokeListItemProps</span> <span class="p">{</span> <b class="conum">(2)</b>
+  <span class="nl">backgroundImage</span><span class="p">:</span> <span class="kr">string</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="k">export</span> <span class="kr">interface</span> <span class="nx">PokeListItemProps</span> <span class="p">{</span>
+  <span class="nl">sprite</span><span class="p">:</span> <span class="kr">string</span><span class="p">;</span>
+  <span class="nl">onClick</span><span class="p">:</span> <span class="p">(</span><span class="nx">event</span><span class="p">?:</span> <span class="kr">any</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="k">void</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kd">const</span> <span class="nx">StyledPokeListItem</span> <span class="o">=</span> <span class="nx">styled</span><span class="p">.</span><span class="nx">button</span><span class="o">&lt;</span><span class="nx">StyledPokeListItemProps</span><span class="o">&gt;</span><span class="s2">` <b class="conum">(3)</b>
+  width: 120px;
+  height: 120px;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16);
+  margin: 10px;
+  </span><span class="p">${({</span> <span class="nx">backgroundImage</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="s2">`background-image: url(</span><span class="p">${</span><span class="nx">backgroundImage</span><span class="p">}</span><span class="s2">);`</span><span class="p">}</span><span class="s2"> <b class="conum">(4)</b>
+  background-position: center;
+  background-repeat: no-repeat;
+`</span><span class="p">;</span>
+
+<span class="kd">const</span> <span class="nx">PokeListItem</span><span class="p">:</span> <span class="nx">FC</span><span class="o">&lt;</span><span class="nx">PokeListItemProps</span><span class="o">&gt;</span> <span class="o">=</span> <span class="p">({</span> <span class="nx">sprite</span><span class="p">,</span> <span class="nx">onClick</span> <span class="p">})</span>  <span class="o">=&gt;</span> <span class="p">(</span> <b class="conum">(5)</b>
+  <span class="p">&lt;</span><span class="nc">StyledPokeListItem</span> <span class="na">backgroundImage</span><span class="p">=</span><span class="si">{</span><span class="nx">sprite</span><span class="si">}</span> <span class="na">onClick</span><span class="p">=</span><span class="si">{</span><span class="nx">onClick</span><span class="si">}</span> <span class="na">role</span><span class="p">=</span><span class="s">"button"</span><span class="p">/&gt;</span>
+<span class="p">);</span>
+
+<span class="k">export</span> <span class="k">default</span> <span class="nx">PokeListItem</span><span class="p">;</span></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>When we&#8217;re using styled components to create components we&#8217;ll mostly do so by using a function from styled components. In order to do so we must import the default export from styled components.</p>
+</li>
+<li>
+<p>On our css component we&#8217;ve used the style attribute to set the background image, since we&#8217;re using styled components that&#8217;s no longer necesarry as we can pass it as a prop. But in order to do so we have to define a property interface for our styled component.</p>
+</li>
+<li>
+<p>This is the way to create a button DOM element that&#8217;s been styled with Styled Components, when we pass a generic to the function, we&#8217;re defining the shape of the props, which we can use later to set dynamic styling.</p>
+</li>
+<li>
+<p>Here we&#8217;ll use <em>String Interpolation</em> to set a dynamic style, we&#8217;ll extract the backgroundImage from our properties with object deconstruction and use it to create our css string.</p>
+</li>
+<li>
+<p>Another big difference is the way we&#8217;ve created our component, we&#8217;ve changed from a class component to a Functional Component, hence the return type FC. The type FC takes one generic that defines the shape of the properties. We use object deconstruction here to extract the sprite and onClick function out our properties.
+A functional component doesn&#8217;t have a render function, since what is returned is what&#8217;s being rendered.</p>
+</li>
+</ol>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+if your editor is giving you errors on the styled-components import, make sure you&#8217;ll also have imported the types.
+</td>
+</tr>
+</table>
+</div>
+</div>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_visual_testing_documentation_with_storybook">3.2. Visual testing &amp; documentation with Storybook</h3>
+<div class="paragraph">
+<p>By now we&#8217;ve spent some time developing our first component, but we could write all the code we want, without testing it there&#8217;s no way of telling it works.<br>
+So how do we go about testing our component, first we&#8217;ll start by creating stories for Storybook, this will add documentation and a visual way to check your components. Afterwards we&#8217;ll test the behaviour of our component through unit testing and we&#8217;ll also create a snapshot test, which tests the rendering of the component.</p>
+</div>
 <div class="sect3">
 <h4 id="_setting_up_storybook">3.2.1. Setting up storybook</h4>
-
+<div class="paragraph">
+<p>So let&#8217;s dive right in and add Storybook to our project. Luckily for us, Storybook has a handy CLI tool for adding Storybook to existing projects. This removes the need of manually adding the correct dependencies and doing the setup of Storybook.<br>
+Run <code>npx sb init</code> in the root directory of your project. At the time of writing both Storybook and create-react-app come with a dependency on babel-loader, however the versions don&#8217;t match and this will throw compilation errors. To resolve this issue add a resolutions block in your package.json with the correct version to babel-loader.</p>
+</div>
+<div class="paragraph">
+<p><sub>package.json</sub></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="json"><span class="p">{</span><span class="w">
+  </span><span class="err">...rest</span><span class="w"> </span><span class="err">omitted</span><span class="w"> </span><span class="err">for</span><span class="w"> </span><span class="err">brevity</span><span class="w">
+  </span><span class="nl">"resolutions"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"babel-loader"</span><span class="p">:</span><span class="w"> </span><span class="s2">"8.1.0"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Storybook itself comes with a couple of examples so we can test our installation straight out of the box. Run <code>yarn storybook</code> to start storybook in development mode, this will add a live reload server so you don&#8217;t have to restart after every change.<br>
+If everything went well you should see output like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>│   Storybook 6.3.1 started                          │
+│   11 s for preview                                 │
+│                                                    │
+│    Local:            http://localhost:6006/        │
+│    On your network:  http://192.168.0.176:6006/    │</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If you go to <a href="http://localhost:6060">http://localhost:6060 </a> and are greeted by following screen everything went well and Storybook is ready to be used.</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="assets/img/storybook-first-start.png" alt="Figure - Storybook first start"></span></p>
+</div>
 </div>
 <div class="sect3">
 <h4 id="_writing_our_first_story">3.2.2. Writing our first story</h4>
+<div class="paragraph">
+<p>foobar</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="tsx"><span class="k">import</span> <span class="nx">React</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">react</span><span class="dl">'</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">Story</span><span class="p">,</span> <span class="nx">Meta</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">@storybook/react</span><span class="dl">'</span><span class="p">;</span>
 
+<span class="k">import</span> <span class="nx">PokeListItem</span><span class="p">,</span> <span class="p">{</span><span class="nx">PokeListItemProps</span><span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">.</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="k">export</span> <span class="k">default</span> <span class="p">{</span>
+    <span class="na">title</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Components/PokeListItem</span><span class="dl">"</span><span class="p">,</span>
+    <span class="na">component</span><span class="p">:</span> <span class="nx">PokeListItem</span><span class="p">,</span>
+    <span class="na">argTypes</span><span class="p">:</span> <span class="p">{</span><span class="na">onClick</span><span class="p">:</span> <span class="p">{</span><span class="na">action</span><span class="p">:</span> <span class="dl">'</span><span class="s1">clicked</span><span class="dl">'</span><span class="p">}}</span>
+<span class="p">}</span> <span class="k">as</span> <span class="nx">Meta</span><span class="p">;</span> <b class="conum">(1)</b>
+
+<span class="kd">const</span> <span class="nx">Template</span><span class="p">:</span> <span class="nx">Story</span><span class="o">&lt;</span><span class="nx">PokeListItemProps</span><span class="o">&gt;</span> <span class="o">=</span> <span class="p">(</span><span class="nx">args</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">&lt;</span><span class="nc">PokeListItem</span> <span class="si">{</span><span class="p">...</span><span class="nx">args</span><span class="si">}</span> <span class="p">/&gt;;</span> <b class="conum">(2)</b>
+
+<span class="k">export</span> <span class="kd">const</span> <span class="nx">Default</span> <span class="o">=</span> <span class="nx">Template</span><span class="p">.</span><span class="nx">bind</span><span class="p">({});</span> <b class="conum">(3)</b>
+<span class="nx">Default</span><span class="p">.</span><span class="nx">args</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="na">sprite</span><span class="p">:</span> <span class="dl">"</span><span class="s2">https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png</span><span class="dl">"</span><span class="p">,</span>
+<span class="p">}</span> <b class="conum">(4)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>foobar</p>
+</li>
+<li>
+<p>foobar</p>
+</li>
+<li>
+<p>foobar</p>
+</li>
+<li>
+<p>foobar</p>
+</li>
+</ol>
+</div>
 </div>
 </div>
 <div class="sect2">

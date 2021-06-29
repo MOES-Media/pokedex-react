@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Component: PokeListItem Should render correctly 1`] = `
+exports[`Component: PokeListItem should render correctly 1`] = `
 <button
   className="sc-bdnxRM hSQkRS"
   onClick={[MockFunction]}

@@ -1,0 +1,55 @@
+Now that we have our first component, styled with css, we'll go over it once more and refactor it using styled components. +
+One of the drawbacks of styling with css is that your component and it's styling are split in 2 locations, which is harder to process. Furthermore if you rely on conditional styling, when using css, your components will end up with a multitude of conditional checks for the right class names. +
+Using Styled Components will help keep our concerns of styling and component behaviour seperated, but since this is all javascript (or in our case typescript) and Styled Components return valid React Components. We can also pass properties and do our checks directly in our component, removing the need of complex conditionals to set the correct classnames on our component. Another added benefit of Styled Components being React Elements is that we can add specific css tests for it through the use of link:https://github.com/styled-components/jest-styled-components[jest-styled-components].
+
+===== Adding Styled Components to our project
+
+Before we can begin using Styled Components we need to install 2 dependencies, the first one is the Styled Components library itself. But since we're using typescript we'll also need to add the types of Styled Components. 
+
+* `yarn add styled-components` will add the Styled Components library.
+* `yarn add -D @types/styled-components` will add the types to your project for typescript to use.
+
+===== Refactoring our PokeListItem
+
+~src/components/PokeListItem/index.tsx~
+[source,tsx]
+----
+import React, { FC } from "react";
+import styled from "styled-components"; <.>
+
+interface StyledPokeListItemProps { <.>
+  backgroundImage: string;
+};
+
+export interface PokeListItemProps {
+  sprite: string;
+  onClick: (event?: any) => void;
+}
+
+const StyledPokeListItem = styled.button<StyledPokeListItemProps>` <.>
+  width: 120px;
+  height: 120px;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16);
+  margin: 10px;
+  ${({ backgroundImage }) => `background-image: url(${backgroundImage});`} <.>
+  background-position: center;
+  background-repeat: no-repeat;
+`;
+
+const PokeListItem: FC<PokeListItemProps> = ({ sprite, onClick })  => ( <.>
+  <StyledPokeListItem backgroundImage={sprite} onClick={onClick} role="button"/>
+);
+
+export default PokeListItem;
+----
+
+<.> When we're using styled components to create components we'll mostly do so by using a function from styled components. In order to do so we must import the default export from styled components.
+<.> On our css component we've used the style attribute to set the background image, since we're using styled components that's no longer necesarry as we can pass it as a prop. But in order to do so we have to define a property interface for our styled component.
+<.> This is the way to create a button DOM element that's been styled with Styled Components, when we pass a generic to the function, we're defining the shape of the props, which we can use later to set dynamic styling.
+<.> Here we'll use _String Interpolation_ to set a dynamic style, we'll extract the backgroundImage from our properties with object deconstruction and use it to create our css string.
+<.> Another big difference is the way we've created our component, we've changed from a class component to a Functional Component, hence the return type FC. The type FC takes one generic that defines the shape of the properties. We use object deconstruction here to extract the sprite and onClick function out our properties.
+A functional component doesn't have a render function, since what is returned is what's being rendered.
+
+NOTE: if your editor is giving you errors on the styled-components import, make sure you'll also have imported the types.

@@ -28,9 +28,42 @@ include::snippets/ch3/02.pokelistitem-styled-component.adoc[]
 
 === Visual testing & documentation with Storybook
 
+By now we've spent some time developing our first component, but we could write all the code we want, without testing it there's no way of telling it works. +
+So how do we go about testing our component, first we'll start by creating stories for Storybook, this will add documentation and a visual way to check your components. Afterwards we'll test the behaviour of our component through unit testing and we'll also create a snapshot test, which tests the rendering of the component.
+
 ==== Setting up storybook
 
+So let's dive right in and add Storybook to our project. Luckily for us, Storybook has a handy CLI tool for adding Storybook to existing projects. This removes the need of manually adding the correct dependencies and doing the setup of Storybook. +
+Run `npx sb init` in the root directory of your project. At the time of writing both Storybook and create-react-app come with a dependency on babel-loader, however the versions don't match and this will throw compilation errors. To resolve this issue add a resolutions block in your package.json with the correct version to babel-loader.
+
+~package.json~
+[source,json]
+----
+{
+  ...rest omitted for brevity
+  "resolutions": {
+    "babel-loader": "8.1.0"
+  }
+}
+----
+
+Storybook itself comes with a couple of examples so we can test our installation straight out of the box. Run `yarn storybook` to start storybook in development mode, this will add a live reload server so you don't have to restart after every change. +
+If everything went well you should see output like this:
+----
+│   Storybook 6.3.1 started                          │
+│   11 s for preview                                 │
+│                                                    │
+│    Local:            http://localhost:6006/        │
+│    On your network:  http://192.168.0.176:6006/    │
+----
+
+If you go to link:http://localhost:6060[http://localhost:6060 ] and are greeted by following screen everything went well and Storybook is ready to be used.
+
+image:assets/img/storybook-first-start.png["Figure - Storybook first start"]
+
 ==== Writing our first story
+
+include::snippets/ch3/03.first-story.adoc[]
 
 === Quality through testing
 

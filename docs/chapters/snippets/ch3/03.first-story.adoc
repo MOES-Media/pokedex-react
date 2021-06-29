@@ -1,3 +1,7 @@
+foobar
+
+[source,tsx]
+----
 import React from 'react';
 import { Story, Meta } from '@storybook/react';
 
@@ -7,11 +11,17 @@ export default {
     title: "Components/PokeListItem",
     component: PokeListItem,
     argTypes: {onClick: {action: 'clicked'}}
-} as Meta;
+} as Meta; <.>
 
-const Template: Story<PokeListItemProps> = (args) => <PokeListItem {...args} />;
-export const Default = Template.bind({});
+const Template: Story<PokeListItemProps> = (args) => <PokeListItem {...args} />; <.>
 
+export const Default = Template.bind({}); <.>
 Default.args = {
     sprite: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png",
-}
+} <.>
+----
+
+<.> foobar
+<.> foobar
+<.> foobar
+<.> foobar
